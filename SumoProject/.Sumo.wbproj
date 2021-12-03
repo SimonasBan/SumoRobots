@@ -5,7 +5,7 @@ sceneTreePerspectives: 000000ff0000000100000002000000c0000000fc01000000060100000
 maximizedDockId: -1
 centralWidgetVisible: 1
 orthographicViewHeight: 1
-textFiles: 0 "controllers/sumo_cont_python/sumo_cont_python.py" "controllers/test_cont_python/test_cont_python.py"
+textFiles: 0 "controllers/sumo_cont_python/sumo_cont_python.py"
 consoles: Console:All:All
 renderingDevicePerspectives: e-puck(1):camera;1;1;0;0
 renderingDevicePerspectives: e-puck:camera;1;1;0;0

@@ -5,6 +5,10 @@ TIME_STEP = 64
 
 MAX_SPEED = 6.28
 
+#4096 means that a big amount of light is measured (an obstacle is close) 
+#0 means that no light is measured (no obstacle).
+DETECT_DISTANCE = 80.0
+
 # create the Robot instance.
 robot = Robot()
 
@@ -32,12 +36,11 @@ while robot.step(TIME_STEP) != -1:
     psValues = []
     for i in range(8):
         psValues.append(ps[i].getValue())
+        
 
     # detect obstacles
-    right_obstacle = psValues[0] > 80.0 or psValues[1] > 80.0 or psValues[2] > 80.0
-    #right_obstacle = psValues[0] > 80.0 or psValues[1] > 80.0 or psValues[2] > 80.0
-    left_obstacle = psValues[5] > 80.0 or psValues[6] > 80.0 or psValues[7] > 80.0
-    #left_obstacle = psValues[5] > 80.0 or psValues[6] > 80.0 or psValues[7] > 80.0
+    right_obstacle = psValues[0] > DETECT_DISTANCE or psValues[1] > DETECT_DISTANCE or psValues[2] > DETECT_DISTANCE
+    left_obstacle = psValues[5] > DETECT_DISTANCE or psValues[6] > DETECT_DISTANCE or psValues[7] > DETECT_DISTANCE
 
     # initialize motor speeds at 50% of MAX_SPEED.
     leftSpeed  = 0.5 * MAX_SPEED
@@ -45,12 +48,14 @@ while robot.step(TIME_STEP) != -1:
     # modify speeds according to obstacles
     if left_obstacle:
         # turn right
-        leftSpeed  = -0.5 * MAX_SPEED
-        rightSpeed = 0.5 * MAX_SPEED
+        leftSpeed  = -1 * MAX_SPEED
+        rightSpeed = 1 * MAX_SPEED
     elif right_obstacle:
         # turn left
-        leftSpeed  = 0.5 * MAX_SPEED
-        rightSpeed = -0.5 * MAX_SPEED
+        leftSpeed  = 1 * MAX_SPEED
+        rightSpeed = -1 * MAX_SPEED
+        
+        
     # write actuators inputs
     leftMotor.setVelocity(leftSpeed)
     rightMotor.setVelocity(rightSpeed)
