@@ -9,6 +9,86 @@ MAX_SPEED = 6.28
 #0 means that no light is measured (no obstacle).
 DETECT_DISTANCE = 80.0
 
+def fight(ps, leftMotor, rightMotor):
+    while robot.step(TIME_STEP) != -1:
+        # read sensors outputs
+        psValues = []
+        for i in range(8):
+            psValues.append(ps[i].getValue())
+        
+        # detect obstacles
+        right_obstacle = psValues[0] > DETECT_DISTANCE or psValues[1] > DETECT_DISTANCE or psValues[2] > DETECT_DISTANCE
+        left_obstacle = psValues[5] > DETECT_DISTANCE or psValues[6] > DETECT_DISTANCE or psValues[7] > DETECT_DISTANCE
+        
+        if left_obstacle:
+            # turn right for 2 steps
+            leftSpeed  = -1 * MAX_SPEED
+            rightSpeed = 1 * MAX_SPEED
+            leftMotor.setVelocity(leftSpeed)
+            rightMotor.setVelocity(rightSpeed)
+            
+            robot.step(TIME_STEP)
+            leftMotor.setVelocity(leftSpeed)
+            rightMotor.setVelocity(rightSpeed)
+            # go back for 2 steps
+            robot.step(TIME_STEP)
+            leftSpeed  = -0.5 * MAX_SPEED
+            rightSpeed = -0.5 * MAX_SPEED
+            leftMotor.setVelocity(leftSpeed)
+            rightMotor.setVelocity(rightSpeed)
+            
+            robot.step(TIME_STEP)
+            leftMotor.setVelocity(leftSpeed)
+            rightMotor.setVelocity(rightSpeed)
+            # ram for 2 steps
+            robot.step(TIME_STEP)
+            leftSpeed  = 1 * MAX_SPEED
+            rightSpeed = 1 * MAX_SPEED
+            leftMotor.setVelocity(leftSpeed)
+            rightMotor.setVelocity(rightSpeed)
+            
+            robot.step(TIME_STEP)
+            leftMotor.setVelocity(leftSpeed)
+            rightMotor.setVelocity(rightSpeed)
+        elif right_obstacle:
+            # turn left for 2 steps
+            leftSpeed  = 1 * MAX_SPEED
+            rightSpeed = -1 * MAX_SPEED
+            leftMotor.setVelocity(leftSpeed)
+            rightMotor.setVelocity(rightSpeed)
+            
+            robot.step(TIME_STEP)
+            leftMotor.setVelocity(leftSpeed)
+            rightMotor.setVelocity(rightSpeed)
+            # go back for 2 steps
+            robot.step(TIME_STEP)
+            leftSpeed  = -0.5 * MAX_SPEED
+            rightSpeed = -0.5 * MAX_SPEED
+            leftMotor.setVelocity(leftSpeed)
+            rightMotor.setVelocity(rightSpeed)
+            
+            robot.step(TIME_STEP)
+            leftMotor.setVelocity(leftSpeed)
+            rightMotor.setVelocity(rightSpeed)
+            # ram for 2 steps
+            robot.step(TIME_STEP)
+            leftSpeed  = 1 * MAX_SPEED
+            rightSpeed = 1 * MAX_SPEED
+            leftMotor.setVelocity(leftSpeed)
+            rightMotor.setVelocity(rightSpeed)
+            
+            robot.step(TIME_STEP)
+            leftMotor.setVelocity(leftSpeed)
+            rightMotor.setVelocity(rightSpeed)
+        
+        # go forward for 5 steps
+        for i in range(0,5):
+            robot.step(TIME_STEP)
+            leftSpeed  = 0.5 * MAX_SPEED
+            rightSpeed = 0.5 * MAX_SPEED
+            leftMotor.setVelocity(leftSpeed)
+            rightMotor.setVelocity(rightSpeed)
+        
 # create the Robot instance.
 robot = Robot()
 
@@ -30,32 +110,4 @@ rightMotor.setPosition(float('inf'))
 leftMotor.setVelocity(0.0)
 rightMotor.setVelocity(0.0)
 
-# feedback loop: step simulation until receiving an exit event
-while robot.step(TIME_STEP) != -1:
-    # read sensors outputs
-    psValues = []
-    for i in range(8):
-        psValues.append(ps[i].getValue())
-        
-
-    # detect obstacles
-    right_obstacle = psValues[0] > DETECT_DISTANCE or psValues[1] > DETECT_DISTANCE or psValues[2] > DETECT_DISTANCE
-    left_obstacle = psValues[5] > DETECT_DISTANCE or psValues[6] > DETECT_DISTANCE or psValues[7] > DETECT_DISTANCE
-
-    # initialize motor speeds at 50% of MAX_SPEED.
-    leftSpeed  = 0.5 * MAX_SPEED
-    rightSpeed = 0.5 * MAX_SPEED
-    # modify speeds according to obstacles
-    if left_obstacle:
-        # turn right
-        leftSpeed  = -1 * MAX_SPEED
-        rightSpeed = 1 * MAX_SPEED
-    elif right_obstacle:
-        # turn left
-        leftSpeed  = 1 * MAX_SPEED
-        rightSpeed = -1 * MAX_SPEED
-        
-        
-    # write actuators inputs
-    leftMotor.setVelocity(leftSpeed)
-    rightMotor.setVelocity(rightSpeed)
+fight(ps, leftMotor, rightMotor)
