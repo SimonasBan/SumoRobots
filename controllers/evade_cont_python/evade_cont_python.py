@@ -60,8 +60,8 @@ while robot.step(TIME_STEP) != -1:
        #take a random number which direction to move
         number = random.randint(0, 3)
         if number==0:
-        #go five steps forward
-            for i in range(0, 5):
+       #turn three steps right
+            for i in range(0, 3):
                 robot.step(TIME_STEP)
                 leftSpeed  = 0.5 * MAX_SPEED
                 rightSpeed = -0.5 * MAX_SPEED
@@ -76,8 +76,8 @@ while robot.step(TIME_STEP) != -1:
                 leftMotor.setVelocity(leftSpeed)
                 rightMotor.setVelocity(rightSpeed)
         else:
-        #turn three steps right
-            for i in range(0, 3):
+        #go five steps forward
+            for i in range(0, 5):
                 robot.step(TIME_STEP)
                 leftSpeed  = 0.5 * MAX_SPEED
                 rightSpeed = 0.5 * MAX_SPEED

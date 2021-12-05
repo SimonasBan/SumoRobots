@@ -1,5 +1,5 @@
 from controller import Robot, DistanceSensor, Motor
-
+import random
 # time in [ms] of a simulation step
 TIME_STEP = 64
 
@@ -82,12 +82,31 @@ def fight(ps, leftMotor, rightMotor):
             rightMotor.setVelocity(rightSpeed)
         
         # go forward for 5 steps
-        for i in range(0,5):
-            robot.step(TIME_STEP)
-            leftSpeed  = 0.5 * MAX_SPEED
-            rightSpeed = 0.5 * MAX_SPEED
-            leftMotor.setVelocity(leftSpeed)
-            rightMotor.setVelocity(rightSpeed)
+        number = random.randint(0, 6)
+        if number==0:
+       #turn three steps right
+            for i in range(0, 5):
+                robot.step(TIME_STEP)
+                leftSpeed  = 0.5 * MAX_SPEED
+                rightSpeed = -0.5 * MAX_SPEED
+                leftMotor.setVelocity(leftSpeed)
+                rightMotor.setVelocity(rightSpeed)
+        elif number==1:
+         #turn three steps left
+            for i in range(0, 3):
+                robot.step(TIME_STEP)
+                leftSpeed  = -0.5 * MAX_SPEED
+                rightSpeed = 0.5 * MAX_SPEED
+                leftMotor.setVelocity(leftSpeed)
+                rightMotor.setVelocity(rightSpeed)
+        else:
+         #go five steps forward
+            for i in range(0, 5):
+                robot.step(TIME_STEP)
+                leftSpeed  = 0.5 * MAX_SPEED
+                rightSpeed = 0.5 * MAX_SPEED
+                leftMotor.setVelocity(leftSpeed)
+                rightMotor.setVelocity(rightSpeed)
         
 # create the Robot instance.
 robot = Robot()
