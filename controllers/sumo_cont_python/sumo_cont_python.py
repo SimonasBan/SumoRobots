@@ -85,7 +85,7 @@ def fight(ps, leftMotor, rightMotor):
         number = random.randint(0, 6)
         if number==0:
        #turn three steps right
-            for i in range(0, 5):
+            for i in range(0, 3):
                 robot.step(TIME_STEP)
                 leftSpeed  = 0.5 * MAX_SPEED
                 rightSpeed = -0.5 * MAX_SPEED
