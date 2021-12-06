@@ -21,7 +21,7 @@ def fight(ps, leftMotor, rightMotor):
         left_obstacle = psValues[5] > DETECT_DISTANCE or psValues[6] > DETECT_DISTANCE or psValues[7] > DETECT_DISTANCE
         
         if left_obstacle:
-            # turn right for 2 steps
+            # turn left for 2 steps
             leftSpeed  = -1 * MAX_SPEED
             rightSpeed = 1 * MAX_SPEED
             leftMotor.setVelocity(leftSpeed)
@@ -51,7 +51,7 @@ def fight(ps, leftMotor, rightMotor):
             leftMotor.setVelocity(leftSpeed)
             rightMotor.setVelocity(rightSpeed)
         elif right_obstacle:
-            # turn left for 2 steps
+            # turn right for 2 steps
             leftSpeed  = 1 * MAX_SPEED
             rightSpeed = -1 * MAX_SPEED
             leftMotor.setVelocity(leftSpeed)
