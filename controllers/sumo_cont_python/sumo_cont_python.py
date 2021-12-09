@@ -1,90 +1,112 @@
 from controller import Robot, DistanceSensor, Motor
 import random
-# time in [ms] of a simulation step
+
+# Time in [ms] of a simulation step
 TIME_STEP = 64
 
+# Maximum speed constant
 MAX_SPEED = 6.28
 
-#4096 means that a big amount of light is measured (an obstacle is close) 
-#0 means that no light is measured (no obstacle).
+# Detection distance constant
+# A value of 4096 means that a big amount of light is measured (an obstacle is close) 
+# A value of 0 means that no light is measured (no obstacle)
 DETECT_DISTANCE = 80.0
 
+# Robot fighting behavior function
 def fight(ps, leftMotor, rightMotor):
+    # Feedback loop: step simulation until receiving an exit event
     while robot.step(TIME_STEP) != -1:
-        # read sensors outputs
+        # Read sensors outputs
         psValues = []
         for i in range(8):
             psValues.append(ps[i].getValue())
         
-        # detect obstacles
+        # Detect obstacles
         right_obstacle = psValues[0] > DETECT_DISTANCE or psValues[1] > DETECT_DISTANCE or psValues[2] > DETECT_DISTANCE
         left_obstacle = psValues[5] > DETECT_DISTANCE or psValues[6] > DETECT_DISTANCE or psValues[7] > DETECT_DISTANCE
         
+        # If the obstacle is to the left
         if left_obstacle:
-            # turn left for 2 steps
+            # Set speed to turn left
             leftSpeed  = -1 * MAX_SPEED
             rightSpeed = 1 * MAX_SPEED
+            # Turn left
             leftMotor.setVelocity(leftSpeed)
             rightMotor.setVelocity(rightSpeed)
             
+            # Advance time and turn left
             robot.step(TIME_STEP)
             leftMotor.setVelocity(leftSpeed)
             rightMotor.setVelocity(rightSpeed)
-            # go back for 2 steps
+            # Advance time
             robot.step(TIME_STEP)
+            # Set speed to go backwards
             leftSpeed  = -0.5 * MAX_SPEED
             rightSpeed = -0.5 * MAX_SPEED
+            # Go backwards
             leftMotor.setVelocity(leftSpeed)
             rightMotor.setVelocity(rightSpeed)
             
+            # Advance time and go backwards
             robot.step(TIME_STEP)
             leftMotor.setVelocity(leftSpeed)
             rightMotor.setVelocity(rightSpeed)
-            # ram for 2 steps
+            # Advance time
             robot.step(TIME_STEP)
+            # Set speed to go forward
             leftSpeed  = 1 * MAX_SPEED
             rightSpeed = 1 * MAX_SPEED
+            # Go forward
             leftMotor.setVelocity(leftSpeed)
             rightMotor.setVelocity(rightSpeed)
             
+            # Advance time and go forward
             robot.step(TIME_STEP)
             leftMotor.setVelocity(leftSpeed)
             rightMotor.setVelocity(rightSpeed)
+        # If the obstacle is to the right
         elif right_obstacle:
-            # turn right for 2 steps
+            # Set speed to turn right
             leftSpeed  = 1 * MAX_SPEED
             rightSpeed = -1 * MAX_SPEED
+            # Turn right
             leftMotor.setVelocity(leftSpeed)
             rightMotor.setVelocity(rightSpeed)
             
+            # Advance time and turn right
             robot.step(TIME_STEP)
             leftMotor.setVelocity(leftSpeed)
             rightMotor.setVelocity(rightSpeed)
-            # go back for 2 steps
+            # Advance time
             robot.step(TIME_STEP)
+            # Set speed to go backwards
             leftSpeed  = -0.5 * MAX_SPEED
             rightSpeed = -0.5 * MAX_SPEED
+            # Go backwards
             leftMotor.setVelocity(leftSpeed)
             rightMotor.setVelocity(rightSpeed)
             
+            # Advance time and go backwards
             robot.step(TIME_STEP)
             leftMotor.setVelocity(leftSpeed)
             rightMotor.setVelocity(rightSpeed)
-            # ram for 2 steps
+            # Advance time
             robot.step(TIME_STEP)
+            # Set speed to go forward
             leftSpeed  = 1 * MAX_SPEED
             rightSpeed = 1 * MAX_SPEED
+            # Go forward
             leftMotor.setVelocity(leftSpeed)
             rightMotor.setVelocity(rightSpeed)
-            
+            # Advance time and go forward
             robot.step(TIME_STEP)
             leftMotor.setVelocity(leftSpeed)
             rightMotor.setVelocity(rightSpeed)
         
-        # go forward for 5 steps
+        # Random number generator to choose which direction to move
         number = random.randint(0, 6)
         if number==0:
-       #turn three steps right
+            # Turn right for three steps
             for i in range(0, 3):
                 robot.step(TIME_STEP)
                 leftSpeed  = 0.5 * MAX_SPEED
@@ -92,7 +114,7 @@ def fight(ps, leftMotor, rightMotor):
                 leftMotor.setVelocity(leftSpeed)
                 rightMotor.setVelocity(rightSpeed)
         elif number==1:
-         #turn three steps left
+            # Turn left for three steps
             for i in range(0, 3):
                 robot.step(TIME_STEP)
                 leftSpeed  = -0.5 * MAX_SPEED
@@ -100,7 +122,7 @@ def fight(ps, leftMotor, rightMotor):
                 leftMotor.setVelocity(leftSpeed)
                 rightMotor.setVelocity(rightSpeed)
         else:
-         #go five steps forward
+            # Go forward for five steps
             for i in range(0, 5):
                 robot.step(TIME_STEP)
                 leftSpeed  = 0.5 * MAX_SPEED
@@ -108,10 +130,10 @@ def fight(ps, leftMotor, rightMotor):
                 leftMotor.setVelocity(leftSpeed)
                 rightMotor.setVelocity(rightSpeed)
         
-# create the Robot instance.
+# Create the Robot instance
 robot = Robot()
 
-# initialize devices
+# Initialize devices
 ps = []
 psNames = [
     'ps0', 'ps1', 'ps2', 'ps3',
@@ -129,4 +151,5 @@ rightMotor.setPosition(float('inf'))
 leftMotor.setVelocity(0.0)
 rightMotor.setVelocity(0.0)
 
+# Begin fighting behavior
 fight(ps, leftMotor, rightMotor)

@@ -20,7 +20,7 @@ E-puck {
   hidden rotation_2 -1 0 0 5.226735342694354
   translation 0.0596736 -0.000135922 0.0425335
   rotation -2.5343199978235687e-05 0.9999999991412167 -3.279159997183912e-05 2.53693
-  controller "sumo_cont_python"
+  controller "evade_cont_python"
   controllerArgs [
     ""
   ]
